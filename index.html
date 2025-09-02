@@ -85,15 +85,15 @@
         auth0Client = await auth0.createAuth0Client({
             domain: auth0Config.domain,
             clientId: auth0Config.clientId,
-            authorizationParams: {
-                redirect_uri: window.location.origin
-            }
+            authorizationParams: auth0Config.authorizationParams
         });
 
         // Gérer la redirection après la connexion
         if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
             await auth0Client.handleRedirectCallback();
-            window.history.replaceState({}, document.title, "/");
+            // ✅ MODIFICATION : Rediriger vers la page d'accueil
+            window.location.pathname = '/home.html';
+            return; // Arrêter l'exécution du script ici pour éviter d'afficher la page de connexion
         }
 
         updateUI();
@@ -134,5 +134,4 @@
     };
   </script>
 </body>
-  </html>
-  
+</html>
