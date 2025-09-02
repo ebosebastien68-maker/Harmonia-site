@@ -1,153 +1,138 @@
-<!DOCTYPE html>  
-<html lang="fr">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width,initial-scale=1" />  
-  <meta name="description" content="Le portail vers Harmonia. Créez, partagez, connectez-vous." />  
-  <title>Portail d'Accès — Harmonia</title>  
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Le portail vers Harmonia. Créez, partagez, connectez-vous." />
+  <title>Portail d'Accès — Harmonia</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">  
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- gotrue -->  
-  <script src="https://unpkg.com/gotrue-js/dist/gotrue.min.js" defer></script>  
+  <script src="https://cdn.auth0.com/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
 
-  <style>  
-    /* ton CSS reste identique */  
-  </style>  
-</head>  
+  <style>
+    /* CSS (inchangé) */
+    :root{--bg1:#0f1726;--bg2:#07102b;--accent1:#ff4d6d;--accent2:#7c5cff;--text-light:#e6eef8;--text-muted:#9aa3b2;--border-color:rgba(255,255,255,0.05);--success:#50ffaa;--error:#ff5050}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Poppins',sans-serif;color:var(--text-light);background:linear-gradient(135deg,var(--bg1),var(--bg2));line-height:1.6}
+    .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+    .wrap{width:100%;max-width:980px;display:grid;grid-template-columns:1fr 420px;gap:2.5rem;align-items:center}
+    .hero{padding:2rem;border-radius:1.25rem;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));box-shadow:0 10px 30px rgba(0,0,0,0.5);border:1px solid var(--border-color)}
+    .logo{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem}.badge{width:56px;height:56px;border-radius:.75rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:grid;place-content:center;font-weight:700;font-size:1.5rem;color:#fff}.logo-title{font-weight:700;font-size:1.1rem}.logo-subtitle{font-size:.8rem;color:var(--text-muted)}.hero h1{margin:0;font-size:1.8rem;line-height:1.2;font-weight:600}.hero p{color:var(--text-muted);margin-top:1rem;font-size:.95rem;max-width:560px}.features{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}.feature{background:rgba(255,255,255,0.03);padding:.6rem .9rem;border-radius:.6rem;font-size:.8rem;color:#dfe8ff}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:1rem;padding:2rem;border:1px solid var(--border-color);box-shadow:0 14px 40px rgba(2,6,23,0.6); text-align: center;}
+    .form-title{font-size:1.5rem;font-weight:600;text-align:center;margin-bottom:1.5rem}
+    .btn{width:100%;padding:.8rem;border-radius:.6rem;border:none;cursor:pointer;font-weight:700;font-size:1rem;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;margin-top:.5rem;box-shadow:0 8px 20px rgba(124,92,255,.12);transition:transform .2s,box-shadow .2s,opacity .2s}.btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(124,92,255,.2)}.btn:disabled{cursor:not-allowed;opacity:.6}
+    .user-profile { display: none; }
+    .user-profile img { border-radius: 50%; width: 80px; height: 80px; margin-bottom: 1rem; }
+    .user-profile p { margin-bottom: 1.5rem; }
+    @media (max-width:900px){.wrap{grid-template-columns:1fr;padding:1rem;gap:2rem}.hero{text-align:center}.hero p{max-width:100%}.features{justify-content:center}}
+  </style>
+</head>
 
-<body>  
-  <div class="container">  
-    <div class="wrap">  
-      <section class="hero">  
-        <div class="logo">  
-          <div class="badge">H</div>  
-          <div>  
-            <div class="logo-title">Harmonia</div>  
-            <div class="logo-subtitle">Votre espace de création et de partage.</div>  
-          </div>  
-        </div>  
-        <h1>Bienvenue sur Harmonia.</h1>  
-        <p>Explorez des communautés, forgez des alliances, vivez des expériences uniques. Ici, la connexion est réinventée.</p>  
-      </section>  
+<body>
+  <div class="container">
+    <div class="wrap">
+      <section class="hero">
+        <div class="logo">
+          <div class="badge">H</div>
+          <div>
+            <div class="logo-title">Harmonia</div>
+            <div class="logo-subtitle">Votre espace de création et de partage.</div>
+          </div>
+        </div>
+        <h1>Bienvenue sur Harmonia.</h1>
+        <p>Explorez des communautés, forgez des alliances, vivez des expériences uniques. Ici, la connexion est réinventée.</p>
+        <div class="features" role="list">
+          <div class="feature" role="listitem">Communautés & Chat</div>
+          <div class="feature" role="listitem">Jeux et Événements</div>
+          <div class="feature" role="listitem">Partage de Médias</div>
+          <div class="feature" role="listitem">Ateliers Créatifs</div>
+        </div>
+      </section>
 
-      <aside class="card" aria-label="Portail d'authentification">  
+      <aside class="card" aria-label="Portail d'authentification">
+          <div id="logged-out-view">
+            <h2 class="form-title">Accéder à Harmonia</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Connectez-vous ou créez un compte pour rejoindre la communauté.</p>
+            <button id="btn-login" class="btn">Se connecter / S'inscrire</button>
+          </div>
 
-        <!-- Signup -->  
-        <div id="signup-section" class="form-section">  
-          <h2 class="form-title">Créer un compte</h2>  
-          <form id="signup-form" autocomplete="on" novalidate>  
-            <div class="field"><label for="signup-firstname">Prénom</label><input id="signup-firstname" type="text" required /></div>  
-            <div class="field"><label for="signup-lastname">Nom</label><input id="signup-lastname" type="text" required /></div>  
-            <div class="field"><label for="signup-dob">Date de naissance</label><input id="signup-dob" type="date" required /></div>  
-            <div class="field"><label for="signup-email">Adresse e-mail</label><input id="signup-email" type="email" required /></div>  
-            <div class="field"><label for="signup-password">Mot de passe</label><input id="signup-password" type="password" minlength="6" required /></div>  
-            <button class="btn" type="submit" id="signup-button">Rejoindre Harmonia</button>  
-            <div id="signup-msg" class="msg"></div>  
-          </form>  
-        </div>  
+          <div id="logged-in-view" class="user-profile">
+            <h2 class="form-title">Vous êtes connecté !</h2>
+            <img id="user-picture" src="" alt="Avatar de l'utilisateur" />
+            <p id="user-email"></p>
+            <button id="btn-logout" class="btn">Se déconnecter</button>
+          </div>
+      </aside>
+    </div>
+  </div>
 
-        <hr class="card-divider">  
+  <script>
+    let auth0Client = null;
 
-        <!-- Login -->  
-        <div id="login-section" class="form-section">  
-          <h2 class="form-title">Se connecter</h2>  
-          <form id="login-form" autocomplete="on">  
-            <div class="field"><label for="login-email">Adresse e-mail</label><input id="login-email" type="email" required /></div>  
-            <div class="field"><label for="login-password">Mot de passe</label><input id="login-password" type="password" required /></div>  
-            <button class="btn" type="submit" id="login-button">Entrer sur Harmonia</button>  
-            <div id="login-msg" class="msg"></div>  
-          </form>  
-        </div>  
+    // ✅ Configuration avec vos clés personnelles
+    const auth0Config = {
+      domain: "Dev-c274fa5uephphz0b.us.auth0.com",
+      clientId: "Yc03S2plYD57YApvPKkN2wmyZSe5czYt",
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    };
 
-        <hr class="card-divider">  
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        auth0Client = await auth0.createAuth0Client({
+            domain: auth0Config.domain,
+            clientId: auth0Config.clientId,
+            authorizationParams: {
+                redirect_uri: window.location.origin
+            }
+        });
 
-        <!-- Reset -->  
-        <div id="reset-section" class="form-section">  
-          <h2 class="form-title">Mot de passe oublié</h2>  
-          <form id="reset-form">  
-            <div class="field"><label for="reset-email">E-mail</label><input id="reset-email" type="email" required /></div>  
-            <button class="btn" type="submit" id="reset-button">Envoyer le lien</button>  
-            <div id="reset-msg" class="msg"></div>  
-          </form>  
-        </div>  
+        // Gérer la redirection après la connexion
+        if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
+            await auth0Client.handleRedirectCallback();
+            window.history.replaceState({}, document.title, "/");
+        }
 
-      </aside>  
-    </div>  
-  </div>  
+        updateUI();
 
-  <script>  
-    document.addEventListener('DOMContentLoaded', () => {  
-      const REDIRECT_URL = "home.html";  
+        // Ajout des écouteurs d'événements
+        document.getElementById("btn-login").addEventListener("click", login);
+        document.getElementById("btn-logout").addEventListener("click", logout);
 
-      if (typeof GoTrue === 'undefined') {  
-        console.error("GoTrue n'est pas chargé");  
-        return;  
-      }  
+      } catch (e) {
+        console.error("Erreur d'initialisation Auth0", e);
+        alert("Erreur: Impossible de contacter le service d'authentification.");
+      }
+    });
 
-      const auth = new GoTrue({  
-        APIUrl: "https://signupharmonia.netlify.app/.netlify/identity",  
-        setCookie: true,  
-      });  
+    const updateUI = async () => {
+        const isAuthenticated = await auth0Client.isAuthenticated();
+        
+        document.getElementById("logged-in-view").style.display = isAuthenticated ? "block" : "none";
+        document.getElementById("logged-out-view").style.display = isAuthenticated ? "none" : "block";
 
-      const showMsg = (el, text, type = 'is-error') => {  
-        el.textContent = text;  
-        el.className = `msg ${type} is-visible`;  
-      };  
+        if (isAuthenticated) {
+            const user = await auth0Client.getUser();
+            document.getElementById("user-picture").src = user.picture;
+            document.getElementById("user-email").textContent = user.email;
+        }
+    };
 
-      // --- Signup ---  
-      document.getElementById('signup-form').addEventListener('submit', async (e) => {  
-        e.preventDefault();  
-        const email = document.getElementById('signup-email').value.trim();  
-        const password = document.getElementById('signup-password').value;  
-        const firstname = document.getElementById('signup-firstname').value.trim();  
-        const lastname = document.getElementById('signup-lastname').value.trim();  
-        const dob = document.getElementById('signup-dob').value;  
+    const login = async () => {
+        await auth0Client.loginWithRedirect();
+    };
 
-        try {  
-          const user = await auth.signup({  
-            email,  
-            password,  
-            data: { first_name: firstname, last_name: lastname, date_of_birth: dob }  
-          });  
-          console.log("Inscription OK:", user);  
-          showMsg(document.getElementById('signup-msg'), "Compte créé, vérifiez vos emails pour confirmer.", "is-success");  
-        } catch (err) {  
-          console.error("Erreur signup:", err);  
-          showMsg(document.getElementById('signup-msg'), err.message || "Erreur à l'inscription");  
-        }  
-      });  
-
-      // --- Login ---  
-      document.getElementById('login-form').addEventListener('submit', async (e) => {  
-        e.preventDefault();  
-        const email = document.getElementById('login-email').value.trim();  
-        const password = document.getElementById('login-password').value;  
-        try {  
-          const user = await auth.login(email, password, true);  
-          console.log("Connexion OK:", user);  
-          window.location.href = REDIRECT_URL;  
-        } catch (err) {  
-          console.error("Erreur login:", err);  
-          showMsg(document.getElementById('login-msg'), err.message || "Email ou mot de passe incorrect");  
-        }  
-      });  
-
-      // --- Reset ---  
-      document.getElementById('reset-form').addEventListener('submit', async (e) => {  
-        e.preventDefault();  
-        const email = document.getElementById('reset-email').value.trim();  
-        try {  
-          await auth.requestPasswordRecovery(email);  
-          showMsg(document.getElementById('reset-msg'), "Email envoyé (si le compte existe)", "is-success");  
-        } catch (err) {  
-          console.error("Erreur reset:", err);  
-          showMsg(document.getElementById('reset-msg'), "Erreur lors de la récupération");  
-        }  
-      });  
-    });  
-  </script>  
-</body>  
-</html>
+    const logout = () => {
+        auth0Client.logout({
+            logoutParams: {
+              returnTo: window.location.origin
+            }
+        });
+    };
+  </script>
+</body>
+  </html>
+  
