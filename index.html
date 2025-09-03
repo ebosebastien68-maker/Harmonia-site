@@ -13,7 +13,6 @@
   <script src="https://cdn.auth0.com/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
 
   <style>
-    /* CSS (inchangé) */
     :root{--bg1:#0f1726;--bg2:#07102b;--accent1:#ff4d6d;--accent2:#7c5cff;--text-light:#e6eef8;--text-muted:#9aa3b2;--border-color:rgba(255,255,255,0.05);--success:#50ffaa;--error:#ff5050}
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Poppins',sans-serif;color:var(--text-light);background:linear-gradient(135deg,var(--bg1),var(--bg2));line-height:1.6}
     .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
@@ -68,42 +67,46 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
     let auth0Client = null;
 
+    // Configuration qui utilise les variables d'environnement de Netlify
+    // C'est la correction la plus importante !
     const auth0Config = {
-      domain: "dev-c274fa5uephphz0b.us.auth0.com",
-      clientId: "Yc03S2plYD57YApvPKkN2wmyZSe5czYt",
+      domain: import.meta.env.VITE_AUTH0_DOMAIN,
+      clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
       authorizationParams: {
         redirect_uri: window.location.origin
       }
     };
 
-    document.addEventListener("DOMContentLoaded", async () => {
+    // Fonction principale qui s'exécute au chargement de la page
+    const configureClient = async () => {
       try {
         auth0Client = await auth0.createAuth0Client({
             domain: auth0Config.domain,
             clientId: auth0Config.clientId,
             authorizationParams: auth0Config.authorizationParams
         });
-
-        if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
-            await auth0Client.handleRedirectCallback();
-            window.location.pathname = '/home.html';
-            return;
-        }
-
-        updateUI();
-
-        document.getElementById("btn-login").addEventListener("click", login);
-        document.getElementById("btn-logout").addEventListener("click", logout);
-
       } catch (e) {
         console.error("Erreur d'initialisation Auth0", e);
-        alert("Erreur: Impossible de contacter le service d'authentification.");
+        // Affiche l'erreur si les variables d'environnement ne sont pas trouvées
+        alert("Erreur: Impossible de contacter le service d'authentification. Vérifiez la configuration.");
       }
-    });
+    };
 
+    // Gère la redirection après la connexion
+    const handleRedirect = async () => {
+        if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
+            await auth0Client.handleRedirectCallback();
+            // Redirige vers la page d'accueil après connexion.
+            // Assurez-vous que le fichier 'home.html' existe !
+            window.history.replaceState({}, document.title, "/");
+            window.location.pathname = '/home.html';
+        }
+    };
+    
+    // Met à jour l'interface utilisateur (affiche le profil ou le bouton de connexion)
     const updateUI = async () => {
         const isAuthenticated = await auth0Client.isAuthenticated();
         
@@ -117,6 +120,7 @@
         }
     };
 
+    // Fonctions pour la connexion et la déconnexion
     const login = async () => {
         await auth0Client.loginWithRedirect();
     };
@@ -127,6 +131,22 @@
               returnTo: window.location.origin
             }
         });
+    };
+
+    // Exécution au chargement de la page
+    window.onload = async () => {
+      await configureClient();
+      
+      // Si la configuration a échoué, on ne continue pas
+      if (!auth0Client) {
+        return;
+      }
+      
+      await handleRedirect();
+      await updateUI();
+
+      document.getElementById("btn-login").addEventListener("click", login);
+      document.getElementById("btn-logout").addEventListener("click", logout);
     };
   </script>
 </body>
