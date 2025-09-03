@@ -71,7 +71,6 @@
   <script>
     let auth0Client = null;
 
-    // ✅ Configuration CORRIGÉE avec vos clés personnelles
     const auth0Config = {
       domain: "dev-c274fa5uephphz0b.us.auth0.com",
       clientId: "Yc03S2plYD57YApvPKkN2wmyZSe5czYt",
@@ -88,17 +87,14 @@
             authorizationParams: auth0Config.authorizationParams
         });
 
-        // Gérer la redirection après la connexion
         if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
             await auth0Client.handleRedirectCallback();
-            // Rediriger vers la page d'accueil
             window.location.pathname = '/home.html';
-            return; // Arrêter l'exécution du script ici pour éviter d'afficher la page de connexion
+            return;
         }
 
         updateUI();
 
-        // Ajout des écouteurs d'événements
         document.getElementById("btn-login").addEventListener("click", login);
         document.getElementById("btn-logout").addEventListener("click", logout);
 
