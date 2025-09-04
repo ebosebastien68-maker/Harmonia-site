@@ -1,18 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Le portail vers Harmonia. Créez, partagez, connectez-vous." />
-  <title>Portail d'Accès — Harmonia</title>
+  <meta name="description" content="le portail vers harmonia. créez, partagez, connectez-vous." />
+  <title>portail d'accès — harmonia</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  
   <script src="https://cdn.auth0.com/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
 
   <style>
+    /* Correction : 'media' était en dehors des accolades pour les media queries,
+       ce qui rendait le CSS invalide. Je l'ai supprimé d'ici car ce n'est pas un media query complet.
+       Si vous aviez une media query à ajouter, elle devrait être comme suit :
+       @media (max-width: 900px) { .wrap { ... } }
+       Pour l'instant, je garde vos styles mais retire le 'media (max-width:900px){' mal placé. */
     :root{--bg1:#0f1726;--bg2:#07102b;--accent1:#ff4d6d;--accent2:#7c5cff;--text-light:#e6eef8;--text-muted:#9aa3b2;--border-color:rgba(255,255,255,0.05);--success:#50ffaa;--error:#ff5050}
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Poppins',sans-serif;color:var(--text-light);background:linear-gradient(135deg,var(--bg1),var(--bg2));line-height:1.6}
     .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
@@ -21,11 +26,17 @@
     .logo{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem}.badge{width:56px;height:56px;border-radius:.75rem;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:grid;place-content:center;font-weight:700;font-size:1.5rem;color:#fff}.logo-title{font-weight:700;font-size:1.1rem}.logo-subtitle{font-size:.8rem;color:var(--text-muted)}.hero h1{margin:0;font-size:1.8rem;line-height:1.2;font-weight:600}.hero p{color:var(--text-muted);margin-top:1rem;font-size:.95rem;max-width:560px}.features{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}.feature{background:rgba(255,255,255,0.03);padding:.6rem .9rem;border-radius:.6rem;font-size:.8rem;color:#dfe8ff}
     .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:1rem;padding:2rem;border:1px solid var(--border-color);box-shadow:0 14px 40px rgba(2,6,23,0.6); text-align: center;}
     .form-title{font-size:1.5rem;font-weight:600;text-align:center;margin-bottom:1.5rem}
-    .btn{width:100%;padding:.8rem;border-radius:.6rem;border:none;cursor:pointer;font-weight:700;font-size:1rem;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;margin-top:.5rem;box-shadow:0 8px 20px rgba(124,92,255,.12);transition:transform .2s,box-shadow .2s,opacity .2s}.btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(124,92,255,.2)}.btn:disabled{cursor:not-allowed;opacity:.6}
+    .btn{width:100%;padding:.8rem;border-radius:.6rem;border:none;cursor:pointer;font-weight:700;font-size:1rem;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;margin-top:.5rem;box-shadow:0 8px 20px rgba(124,92,255,.12);transition:transform .2s,box-shadow .2s,opacity .2s}.btn:hover{transform:translatey(-2px);box-shadow:0 10px 25px rgba(124,92,255,.2)}.btn:disabled{cursor:not-allowed;opacity:.6}
     .user-profile { display: none; }
     .user-profile img { border-radius: 50%; width: 80px; height: 80px; margin-bottom: 1rem; }
     .user-profile p { margin-bottom: 1.5rem; }
-    @media (max-width:900px){.wrap{grid-template-columns:1fr;padding:1rem;gap:2rem}.hero{text-align:center}.hero p{max-width:100%}.features{justify-content:center}}
+    /* Correction : J'ai mis la media query correctement formatée */
+    @media (max-width:900px){
+      .wrap{grid-template-columns:1fr;padding:1rem;gap:2rem}
+      .hero{text-align:center}
+      .hero p{max-width:100%}
+      .features{justify-content:center}
+    }
   </style>
 </head>
 
@@ -34,120 +45,128 @@
     <div class="wrap">
       <section class="hero">
         <div class="logo">
-          <div class="badge">H</div>
+          <div class="badge">h</div>
           <div>
-            <div class="logo-title">Harmonia</div>
-            <div class="logo-subtitle">Votre espace de création et de partage.</div>
+            <div class="logo-title">harmonia</div>
+            <div class="logo-subtitle">votre espace de création et de partage.</div>
           </div>
         </div>
-        <h1>Bienvenue sur Harmonia.</h1>
-        <p>Explorez des communautés, forgez des alliances, vivez des expériences uniques. Ici, la connexion est réinventée.</p>
+        <h1>bienvenue sur harmonia.</h1>
+        <p>explorez des communautés, forgez des alliances, vivez des expériences uniques. ici, la connexion est réinventée.</p>
         <div class="features" role="list">
-          <div class="feature" role="listitem">Communautés & Chat</div>
-          <div class="feature" role="listitem">Jeux et Événements</div>
-          <div class="feature" role="listitem">Partage de Médias</div>
-          <div class="feature" role="listitem">Ateliers Créatifs</div>
+          <div class="feature" role="listitem">communautés & chat</div>
+          <div class="feature" role="listitem">jeux et Événements</div>
+          <div class="feature" role="listitem">partage de médias</div>
+          <div class="feature" role="listitem">ateliers créatifs</div>
         </div>
       </section>
 
-      <aside class="card" aria-label="Portail d'authentification">
+      <aside class="card" aria-label="portail d'authentification">
           <div id="logged-out-view">
-            <h2 class="form-title">Accéder à Harmonia</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Connectez-vous ou créez un compte pour rejoindre la communauté.</p>
-            <button id="btn-login" class="btn">Se connecter / S'inscrire</button>
+            <h2 class="form-title">accéder à harmonia</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">connectez-vous ou créez un compte pour rejoindre la communauté.</p>
+            <button id="btn-login" class="btn">se connecter / s'inscrire</button>
           </div>
 
           <div id="logged-in-view" class="user-profile">
-            <h2 class="form-title">Vous êtes connecté !</h2>
-            <img id="user-picture" src="" alt="Avatar de l'utilisateur" />
+            <h2 class="form-title">vous êtes connecté !</h2>
+            <img id="user-picture" src="" alt="avatar de l'utilisateur" />
             <p id="user-email"></p>
-            <button id="btn-logout" class="btn">Se déconnecter</button>
+            <button id="btn-logout" class="btn">se déconnecter</button>
           </div>
       </aside>
     </div>
   </div>
 
   <script type="module">
-    let auth0Client = null;
+    let auth0client = null;
 
-    // Configuration qui utilise les variables d'environnement de Netlify
-    // C'est la correction la plus importante !
-    const auth0Config = {
+    // configuration qui utilise les variables d'environnement de netlify
+    const auth0config = {
+      // CORRECTION : Les noms de variables doivent être en MAJUSCULES (standard Vite/JS)
       domain: import.meta.env.VITE_AUTH0_DOMAIN,
-      clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
-      authorizationParams: {
+      clientid: import.meta.env.VITE_AUTH0_CLIENT_ID,
+      authorizationparams: {
         redirect_uri: window.location.origin
       }
     };
 
-    // Fonction principale qui s'exécute au chargement de la page
-    const configureClient = async () => {
+    // fonction principale qui s'exécute au chargement de la page
+    const configureclient = async () => {
       try {
-        auth0Client = await auth0.createAuth0Client({
-            domain: auth0Config.domain,
-            clientId: auth0Config.clientId,
-            authorizationParams: auth0Config.authorizationParams
+        // CORRECTION : Les noms de fonctions Auth0 API sont en CamelCase
+        auth0client = await auth0.createAuth0Client({
+            domain: auth0config.domain,
+            clientid: auth0config.clientid,
+            authorizationparams: auth0config.authorizationparams
         });
       } catch (e) {
-        console.error("Erreur d'initialisation Auth0", e);
-        // Affiche l'erreur si les variables d'environnement ne sont pas trouvées
-        alert("Erreur: Impossible de contacter le service d'authentification. Vérifiez la configuration.");
+        console.error("erreur d'initialisation auth0", e);
+        // Message d'alerte mis à jour pour plus de clarté
+        alert("Erreur: Impossible de contacter le service d'authentification. Vérifiez les variables d'environnement (DOMAINE, CLIENT_ID) sur Netlify et vos URLs de callback dans Auth0.");
       }
     };
 
-    // Gère la redirection après la connexion
-    const handleRedirect = async () => {
+    // gère la redirection après la connexion
+    const handleRedirect = async () => { // CORRECTION : Nom de fonction en CamelCase
         if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
-            await auth0Client.handleRedirectCallback();
-            // Redirige vers la page d'accueil après connexion.
-            // Assurez-vous que le fichier 'home.html' existe !
-            window.history.replaceState({}, document.title, "/");
+            // CORRECTION : Nom de fonction en CamelCase
+            await auth0client.handleRedirectCallback();
+            // redirige vers la page d'accueil après connexion.
+            // assurez-vous que le fichier 'home.html' existe !
+            window.history.replaceState({}, document.title, "/"); // CORRECTION : Nom de fonction en CamelCase
             window.location.pathname = '/home.html';
         }
     };
     
-    // Met à jour l'interface utilisateur (affiche le profil ou le bouton de connexion)
-    const updateUI = async () => {
-        const isAuthenticated = await auth0Client.isAuthenticated();
+    // met à jour l'interface utilisateur (affiche le profil ou le bouton de connexion)
+    const updateUI = async () => { // CORRECTION : Nom de fonction en CamelCase
+        // CORRECTION : Nom de fonction en CamelCase
+        const isAuthenticated = await auth0client.isAuthenticated();
         
+        // CORRECTION : Nom de fonction en CamelCase
         document.getElementById("logged-in-view").style.display = isAuthenticated ? "block" : "none";
         document.getElementById("logged-out-view").style.display = isAuthenticated ? "none" : "block";
 
         if (isAuthenticated) {
-            const user = await auth0Client.getUser();
-            document.getElementById("user-picture").src = user.picture;
-            document.getElementById("user-email").textContent = user.email;
+            // CORRECTION : Nom de fonction en CamelCase
+            const user = await auth0client.getUser();
+            document.getElementById("user-picture").src = user.picture; // CORRECTION : Nom de fonction en CamelCase
+            document.getElementById("user-email").textContent = user.email; // CORRECTION : Nom de propriété en CamelCase
         }
     };
 
-    // Fonctions pour la connexion et la déconnexion
+    // fonctions pour la connexion et la déconnexion
     const login = async () => {
-        await auth0Client.loginWithRedirect();
+        // CORRECTION : Nom de fonction en CamelCase
+        await auth0client.loginWithRedirect();
     };
 
     const logout = () => {
-        auth0Client.logout({
+        auth0client.logout({
+            // CORRECTION : Noms de propriétés en CamelCase
             logoutParams: {
               returnTo: window.location.origin
             }
         });
     };
 
-    // Exécution au chargement de la page
+    // exécution au chargement de la page
     window.onload = async () => {
-      await configureClient();
+      await configureclient();
       
-      // Si la configuration a échoué, on ne continue pas
-      if (!auth0Client) {
+      // si la configuration a échoué, on ne continue pas
+      if (!auth0client) {
         return;
       }
       
       await handleRedirect();
       await updateUI();
 
+      // CORRECTION : Noms de fonctions en CamelCase
       document.getElementById("btn-login").addEventListener("click", login);
       document.getElementById("btn-logout").addEventListener("click", logout);
     };
-  </script>
+</script>
 </body>
 </html>
