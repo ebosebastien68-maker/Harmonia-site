@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   
-  <script src="https://cdn.auth0.com/auth0-spa-js/2.1/auth0-spa-js.production.js" referrerpolicy="strict-origin-when-cross-origin"></script>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
 
   <style>
     :root{--bg1:#0f1726;--bg2:#07102b;--accent1:#ff4d6d;--accent2:#7c5cff;--text-light:#e6eef8;--text-muted:#9aa3b2;--border-color:rgba(255,255,255,0.05);--success:#50ffaa;--error:#ff5050}
@@ -75,18 +75,20 @@
   <script type="module">
     let auth0Client = null;
 
-    // Vos informations Auth0 sont maintenant directement dans le code.
+    // Vos informations Auth0
     const auth0Config = {
       domain: "dev-c274fa5uephphz0b.us.auth0.com",
-      clientId: "Yc03S2plYD57YApvPKkN2wmyZSe5czYt",
-      authorizationParams: {
-        redirect_uri: window.location.origin
-      }
+      client_id: "Yc03S2plYD57YApvPKkN2wmyZSe5czYt", // Note: l'ancienne version utilise client_id
+      redirect_uri: window.location.origin
     };
 
     const configureClient = async () => {
       try {
-        auth0Client = await auth0.createAuth0Client(auth0Config);
+        // La fonction s'appelle createAuth0Client avec l'ancienne version
+        auth0Client = await createAuth0Client({
+            domain: auth0Config.domain,
+            client_id: auth0Config.client_id
+        });
       } catch (e) {
         console.error("Erreur d'initialisation Auth0", e);
         alert("Erreur: Impossible de contacter le service d'authentification. Vérifiez les valeurs du domaine et de l'ID client dans le code.");
@@ -115,14 +117,14 @@
     };
 
     const login = async () => {
-        await auth0Client.loginWithRedirect();
+        await auth0Client.loginWithRedirect({
+            redirect_uri: auth0Config.redirect_uri
+        });
     };
 
     const logout = () => {
         auth0Client.logout({
-            logoutParams: {
-              returnTo: window.location.origin
-            }
+            returnTo: auth0Config.redirect_uri
         });
     };
 
