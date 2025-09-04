@@ -13,11 +13,6 @@
   <script src="https://cdn.auth0.com/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
 
   <style>
-    /* Correction : 'media' était en dehors des accolades pour les media queries,
-       ce qui rendait le CSS invalide. Je l'ai supprimé d'ici car ce n'est pas un media query complet.
-       Si vous aviez une media query à ajouter, elle devrait être comme suit :
-       @media (max-width: 900px) { .wrap { ... } }
-       Pour l'instant, je garde vos styles mais retire le 'media (max-width:900px){' mal placé. */
     :root{--bg1:#0f1726;--bg2:#07102b;--accent1:#ff4d6d;--accent2:#7c5cff;--text-light:#e6eef8;--text-muted:#9aa3b2;--border-color:rgba(255,255,255,0.05);--success:#50ffaa;--error:#ff5050}
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Poppins',sans-serif;color:var(--text-light);background:linear-gradient(135deg,var(--bg1),var(--bg2));line-height:1.6}
     .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
@@ -30,7 +25,6 @@
     .user-profile { display: none; }
     .user-profile img { border-radius: 50%; width: 80px; height: 80px; margin-bottom: 1rem; }
     .user-profile p { margin-bottom: 1.5rem; }
-    /* Correction : J'ai mis la media query correctement formatée */
     @media (max-width:900px){
       .wrap{grid-template-columns:1fr;padding:1rem;gap:2rem}
       .hero{text-align:center}
@@ -79,94 +73,70 @@
   </div>
 
   <script type="module">
-    let auth0client = null;
+    let auth0Client = null;
 
-    // configuration qui utilise les variables d'environnement de netlify
-    const auth0config = {
-      // CORRECTION : Les noms de variables doivent être en MAJUSCULES (standard Vite/JS)
-      domain: import.meta.env.VITE_AUTH0_DOMAIN,
-      clientid: import.meta.env.VITE_AUTH0_CLIENT_ID,
-      authorizationparams: {
+    // Vos informations Auth0 sont maintenant directement dans le code.
+    const auth0Config = {
+      domain: "dev-c274fa5uephphz0b.us.auth0.com",
+      clientId: "Yc03S2plYD57YApvPKkN2wmyZSe5czYt",
+      authorizationParams: {
         redirect_uri: window.location.origin
       }
     };
 
-    // fonction principale qui s'exécute au chargement de la page
-    const configureclient = async () => {
+    const configureClient = async () => {
       try {
-        // CORRECTION : Les noms de fonctions Auth0 API sont en CamelCase
-        auth0client = await auth0.createAuth0Client({
-            domain: auth0config.domain,
-            clientid: auth0config.clientid,
-            authorizationparams: auth0config.authorizationparams
-        });
+        auth0Client = await auth0.createAuth0Client(auth0Config);
       } catch (e) {
-        console.error("erreur d'initialisation auth0", e);
-        // Message d'alerte mis à jour pour plus de clarté
-        alert("Erreur: Impossible de contacter le service d'authentification. Vérifiez les variables d'environnement (DOMAINE, CLIENT_ID) sur Netlify et vos URLs de callback dans Auth0.");
+        console.error("Erreur d'initialisation Auth0", e);
+        alert("Erreur: Impossible de contacter le service d'authentification. Vérifiez les valeurs du domaine et de l'ID client dans le code.");
       }
     };
 
-    // gère la redirection après la connexion
-    const handleRedirect = async () => { // CORRECTION : Nom de fonction en CamelCase
+    const handleRedirect = async () => {
         if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
-            // CORRECTION : Nom de fonction en CamelCase
-            await auth0client.handleRedirectCallback();
-            // redirige vers la page d'accueil après connexion.
-            // assurez-vous que le fichier 'home.html' existe !
-            window.history.replaceState({}, document.title, "/"); // CORRECTION : Nom de fonction en CamelCase
-            window.location.pathname = '/home.html';
+            await auth0Client.handleRedirectCallback();
+            window.history.replaceState({}, document.title, "/");
+            window.location.pathname = '/home.html'; // Assurez-vous que cette page existe
         }
     };
     
-    // met à jour l'interface utilisateur (affiche le profil ou le bouton de connexion)
-    const updateUI = async () => { // CORRECTION : Nom de fonction en CamelCase
-        // CORRECTION : Nom de fonction en CamelCase
-        const isAuthenticated = await auth0client.isAuthenticated();
+    const updateUI = async () => {
+        const isAuthenticated = await auth0Client.isAuthenticated();
         
-        // CORRECTION : Nom de fonction en CamelCase
         document.getElementById("logged-in-view").style.display = isAuthenticated ? "block" : "none";
         document.getElementById("logged-out-view").style.display = isAuthenticated ? "none" : "block";
 
         if (isAuthenticated) {
-            // CORRECTION : Nom de fonction en CamelCase
-            const user = await auth0client.getUser();
-            document.getElementById("user-picture").src = user.picture; // CORRECTION : Nom de fonction en CamelCase
-            document.getElementById("user-email").textContent = user.email; // CORRECTION : Nom de propriété en CamelCase
+            const user = await auth0Client.getUser();
+            document.getElementById("user-picture").src = user.picture;
+            document.getElementById("user-email").textContent = user.email;
         }
     };
 
-    // fonctions pour la connexion et la déconnexion
     const login = async () => {
-        // CORRECTION : Nom de fonction en CamelCase
-        await auth0client.loginWithRedirect();
+        await auth0Client.loginWithRedirect();
     };
 
     const logout = () => {
-        auth0client.logout({
-            // CORRECTION : Noms de propriétés en CamelCase
+        auth0Client.logout({
             logoutParams: {
               returnTo: window.location.origin
             }
         });
     };
 
-    // exécution au chargement de la page
     window.onload = async () => {
-      await configureclient();
+      await configureClient();
       
-      // si la configuration a échoué, on ne continue pas
-      if (!auth0client) {
-        return;
-      }
+      if (!auth0Client) { return; }
       
       await handleRedirect();
       await updateUI();
 
-      // CORRECTION : Noms de fonctions en CamelCase
       document.getElementById("btn-login").addEventListener("click", login);
       document.getElementById("btn-logout").addEventListener("click", logout);
     };
-</script>
+  </script>
 </body>
 </html>
